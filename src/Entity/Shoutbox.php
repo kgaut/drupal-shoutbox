@@ -23,7 +23,6 @@ use Drupal\user\UserInterface;
  *     "view_builder" = "Drupal\Core\Entity\ViewBuilder\EntityViewBuilder",
  *     "list_builder" = "Drupal\shoutbox\Entity\ListBuilder\ShoutboxListBuilder",
  *     "views_data" = "Drupal\shoutbox\Entity\ViewsData\ShoutboxViewsData",
- *
  *     "form" = {
  *       "default" = "Drupal\shoutbox\Entity\Form\ShoutboxForm",
  *       "add" = "Drupal\shoutbox\Entity\Form\ShoutboxForm",
@@ -41,7 +40,7 @@ use Drupal\user\UserInterface;
  *   entity_keys = {
  *     "id" = "id",
  *     "label" = "name",
- *     "uid" = "creator",
+ *     "uid" = "user_id",
  *     "published" = "status",
  *   },
  *   links = {
@@ -102,21 +101,21 @@ class Shoutbox extends ContentEntityBase implements ShoutboxInterface {
    * {@inheritdoc}
    */
   public function getOwner() {
-    return $this->get('creator')->entity;
+    return $this->get('user_id')->entity;
   }
 
   /**
    * {@inheritdoc}
    */
   public function getOwnerId() {
-    return $this->get('creator')->target_id;
+    return $this->get('user_id')->target_id;
   }
 
   /**
    * {@inheritdoc}
    */
   public function setOwnerId($uid) {
-    $this->set('creator', $uid);
+    $this->set('user_id', $uid);
     return $this;
   }
 
@@ -124,7 +123,7 @@ class Shoutbox extends ContentEntityBase implements ShoutboxInterface {
    * {@inheritdoc}
    */
   public function setOwner(UserInterface $account) {
-    $this->set('creator', $account->id());
+    $this->set('user_id', $account->id());
     return $this;
   }
 
@@ -136,9 +135,8 @@ class Shoutbox extends ContentEntityBase implements ShoutboxInterface {
 
     $fields += static::publishedBaseFieldDefinitions($entity_type);
 
-    $fields['creator'] = BaseFieldDefinition::create('entity_reference')
+    $fields['user_id'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Created by'))
-      ->setDescription(t('The user ID of author of the Shoutbox entity.'))
       ->setSetting('target_type', 'user')
       ->setSetting('handler', 'default')
       ->setDisplayConfigurable('form', TRUE)

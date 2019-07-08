@@ -1,13 +1,19 @@
-# Shoutbox menu items definition
+shoutbox.admin.structure.menu:
+  title: 'Shoutbox'
+  description: 'Configure Shoutbox entities'
+  route_name: shoutbox.settings
+  parent: system.admin_structure
+
+shoutbox.admin.structure.settings:
+  title: 'Shoutbox settings'
+  description: 'Configure Shoutbox entities'
+  route_name: shoutbox.settings
+  parent: shoutbox.admin.structure.menu
+  weight: 1
+
 entity.shoutbox.collection:
   title: 'Shoutboxes'
   route_name: entity.shoutbox.collection
   description: 'List Shoutbox entities'
   parent: system.admin_content
   weight: 100
-
-shoutbox.admin.structure.settings:
-  title: 'Shoutbox settings'
-  description: 'Configure Shoutbox entities'
-  route_name: shoutbox.settings
-  parent: system.admin_structure
