@@ -1,0 +1,22 @@
+{#
+/**
+ * @file shoutbox.html.twig
+ * Default theme implementation to present Shoutbox data.
+ *
+ * This template is used when viewing Shoutbox pages.
+ *
+ *
+ * Available variables:
+ * - content: A list of content items. Use 'content' to print all content, or
+ * - attributes: HTML attributes for the container element.
+ *
+ * @see template_preprocess_shoutbox()
+ *
+ * @ingroup themeable
+ */
+#}
+<div{{ attributes.addClass('shoutbox') }}>
+  {% if content %}
+    {{- content -}}
+  {% endif %}
+</div>

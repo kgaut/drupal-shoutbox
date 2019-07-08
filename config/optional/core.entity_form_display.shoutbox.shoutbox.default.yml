@@ -1,0 +1,21 @@
+uuid: 6fb8a013-8769-48d3-80f0-015c9c10bbfe
+langcode: fr
+status: true
+dependencies:
+  module:
+    - shoutbox
+id: shoutbox.shoutbox.default
+targetEntityType: shoutbox
+bundle: shoutbox
+mode: default
+content:
+  name:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  creator: true

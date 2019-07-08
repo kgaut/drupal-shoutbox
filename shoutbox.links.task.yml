@@ -1,0 +1,21 @@
+# Shoutbox routing definition
+shoutbox.settings_tab:
+  route_name: shoutbox.settings
+  title: 'Settings'
+  base_route: shoutbox.settings
+
+entity.shoutbox.canonical:
+  route_name: entity.shoutbox.canonical
+  base_route: entity.shoutbox.canonical
+  title: 'View'
+
+entity.shoutbox.edit_form:
+  route_name: entity.shoutbox.edit_form
+  base_route: entity.shoutbox.canonical
+  title: 'Edit'
+
+entity.shoutbox.delete_form:
+  route_name:  entity.shoutbox.delete_form
+  base_route:  entity.shoutbox.canonical
+  title: Delete
+  weight: 10

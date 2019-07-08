@@ -1,0 +1,5 @@
+entity.shoutbox.add_form:
+  route_name: entity.shoutbox.add_form
+  title: 'Add Shoutbox'
+  appears_on:
+    - entity.shoutbox.collection
