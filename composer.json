@@ -1,0 +1,20 @@
+{
+    "name": "kgaut/shoutbox",
+    "type": "drupal-module",
+    "description": "Shoutbox module for drupal 8",
+    "authors": [
+        {
+            "name": "Kevin Gautreau",
+            "email": "contact@kgaut.net",
+            "homepage": "https://kgaut.net",
+            "role": "Developer"
+        }
+    ],
+    "keywords": ["Drupal"],
+    "homepage": "https://www.drupal.org/project/shoutbox",
+    "minimum-stability": "dev",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/shoutbox",
+        "source": "http://cgit.drupalcode.org/shoutbox"
+    }
+}
