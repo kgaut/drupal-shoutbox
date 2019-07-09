@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\shoutbox\Entity;
+namespace Drupal\shoutbox\Entity\Interfaces;
 
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityChangedInterface;

@@ -17,3 +17,17 @@ entity.shoutbox.collection:
   description: 'List Shoutbox entities'
   parent: system.admin_content
   weight: 100
+
+# Shout menu items definition
+entity.shout.collection:
+  title: 'Shout list'
+  route_name: entity.shout.collection
+  description: 'List Shout entities'
+  parent: system.admin_structure
+  weight: 100
+
+shout.admin.structure.settings:
+  title: 'Shout settings'
+  description: 'Configure Shout entities'
+  route_name: shout.settings
+  parent: system.admin_structure

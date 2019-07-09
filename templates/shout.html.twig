@@ -1,0 +1,22 @@
+{#
+/**
+ * @file shout.html.twig
+ * Default theme implementation to present Shout data.
+ *
+ * This template is used when viewing Shout pages.
+ *
+ *
+ * Available variables:
+ * - content: A list of content items. Use 'content' to print all content, or
+ * - attributes: HTML attributes for the container element.
+ *
+ * @see template_preprocess_shout()
+ *
+ * @ingroup themeable
+ */
+#}
+<div{{ attributes.addClass('shout') }}>
+  {% if content %}
+    {{- content -}}
+  {% endif %}
+</div>

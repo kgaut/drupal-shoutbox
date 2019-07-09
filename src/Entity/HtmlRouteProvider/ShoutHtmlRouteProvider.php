@@ -7,18 +7,17 @@ use Drupal\Core\Entity\Routing\AdminHtmlRouteProvider;
 use Symfony\Component\Routing\Route;
 
 /**
- * Provides routes for Shoutbox entities.
+ * Provides routes for Shout entities.
  *
  * @see \Drupal\Core\Entity\Routing\AdminHtmlRouteProvider
  * @see \Drupal\Core\Entity\Routing\DefaultHtmlRouteProvider
  */
-class ShoutboxHtmlRouteProvider extends AdminHtmlRouteProvider {
+class ShoutHtmlRouteProvider extends AdminHtmlRouteProvider {
 
   /**
    * {@inheritdoc}
    */
   public function getRoutes(EntityTypeInterface $entity_type) {
-    dd('laaaa');
     $collection = parent::getRoutes($entity_type);
 
     $entity_type_id = $entity_type->id();
@@ -44,7 +43,7 @@ class ShoutboxHtmlRouteProvider extends AdminHtmlRouteProvider {
       $route = new Route("/admin/structure/{$entity_type->id()}/settings");
       $route
         ->setDefaults([
-          '_form' => \Drupal\shoutbox\Entity\Form\ShoutboxSettingsForm::class,
+          '_form' => 'Drupal\shoutbox\Form\ShoutSettingsForm',
           '_title' => "{$entity_type->getLabel()} settings",
         ])
         ->setRequirement('_permission', $entity_type->getAdminPermission())

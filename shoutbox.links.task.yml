@@ -19,3 +19,24 @@ entity.shoutbox.delete_form:
   base_route:  entity.shoutbox.canonical
   title: Delete
   weight: 10
+# Shout routing definition
+shout.settings_tab:
+  route_name: shout.settings
+  title: 'Settings'
+  base_route: shout.settings
+
+entity.shout.canonical:
+  route_name: entity.shout.canonical
+  base_route: entity.shout.canonical
+  title: 'View'
+
+entity.shout.edit_form:
+  route_name: entity.shout.edit_form
+  base_route: entity.shout.canonical
+  title: 'Edit'
+
+entity.shout.delete_form:
+  route_name:  entity.shout.delete_form
+  base_route:  entity.shout.canonical
+  title: Delete
+  weight: 10

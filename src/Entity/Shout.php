@@ -8,52 +8,53 @@ use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityPublishedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
-use Drupal\shoutbox\Entity\Interfaces\ShoutboxInterface;
+use Drupal\shoutbox\Entity\Interfaces\ShoutInterface;
 use Drupal\user\UserInterface;
 
 /**
- * Defines the Shoutbox entity.
+ * Defines the Shout entity.
  *
  * @ingroup shoutbox
  *
  * @ContentEntityType(
- *   id = "shoutbox",
- *   label = @Translation("Shoutbox"),
+ *   id = "shout",
+ *   label = @Translation("Shout"),
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\ViewBuilder\EntityViewBuilder",
- *     "list_builder" = "Drupal\shoutbox\Entity\ListBuilder\ShoutboxListBuilder",
- *     "views_data" = "Drupal\shoutbox\Entity\ViewsData\ShoutboxViewsData",
+ *     "list_builder" = "Drupal\shoutbox\ListBuilder\ShoutListBuilder",
+ *     "views_data" = "Drupal\shoutbox\Entity\ViewsData\ShoutViewsData",
+ *
  *     "form" = {
- *       "default" = "Drupal\shoutbox\Entity\Form\ShoutboxForm",
- *       "add" = "Drupal\shoutbox\Entity\Form\ShoutboxForm",
- *       "edit" = "Drupal\shoutbox\Entity\Form\ShoutboxForm",
- *       "delete" = "Drupal\shoutbox\Entity\Form\ShoutboxDeleteForm",
+ *       "default" = "Drupal\shoutbox\Entity\Form\ShoutForm",
+ *       "add" = "Drupal\shoutbox\Entity\Form\ShoutForm",
+ *       "edit" = "Drupal\shoutbox\Entity\Form\ShoutForm",
+ *       "delete" = "Drupal\shoutbox\Entity\Form\ShoutDeleteForm",
  *     },
  *     "route_provider" = {
- *       "html" = "Drupal\shoutbox\Entity\HtmlRouteProvider\ShoutboxHtmlRouteProvider",
+ *       "html" = "Drupal\shoutbox\Entity\HtmlRouteProvider\ShoutHtmlRouteProvider",
  *     },
- *     "access" = "Drupal\shoutbox\Entity\AccessControlHandler\ShoutboxAccessControlHandler",
+ *     "access" = "Drupal\shoutbox\Entoty\AccessControlHandler\ShoutAccessControlHandler",
  *   },
- *   base_table = "shoutbox",
+ *   base_table = "shout",
  *   translatable = FALSE,
- *   admin_permission = "administer shoutbox",
+ *   admin_permission = "administer shout entities",
  *   entity_keys = {
  *     "id" = "id",
- *     "label" = "name",
- *     "uid" = "creator",
+ *     "uid" = "author",
  *     "published" = "status",
  *   },
  *   links = {
- *     "canonical" = "/shoutbox/{shoutbox}",
- *     "add-form" = "/admin/content/shoutbox/add",
- *     "edit-form" = "/admin/content/shoutbox/{shoutbox}/edit",
- *     "delete-form" = "/admin/content/shoutbox/{shoutbox}/delete",
- *     "collection" = "/admin/content/shoutbox",
+ *     "canonical" = "/admin/content/shoutbox/shout/{shout}",
+ *     "add-form" = "/admin/content/shoutbox/shout/add",
+ *     "edit-form" = "/admin/content/shoutbox/shout/{shout}/edit",
+ *     "delete-form" = "/admin/content/shoutbox/shout/{shout}/delete",
+ *     "collection" = "/admin/content/shoutbox/shout",
  *   },
- *   field_ui_base_route = "shoutbox.settings"
+ *   field_ui_base_route = "shout.settings"
  * )
  */
-class Shoutbox extends ContentEntityBase implements ShoutboxInterface {
+class Shout extends ContentEntityBase implements ShoutInterface {
+
   use EntityChangedTrait;
   use EntityPublishedTrait;
 
@@ -63,23 +64,8 @@ class Shoutbox extends ContentEntityBase implements ShoutboxInterface {
   public static function preCreate(EntityStorageInterface $storage_controller, array &$values) {
     parent::preCreate($storage_controller, $values);
     $values += [
-      'creator' => \Drupal::currentUser()->id(),
+      'author' => \Drupal::currentUser()->id(),
     ];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getName() {
-    return $this->get('name')->value;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setName($name) {
-    $this->set('name', $name);
-    return $this;
   }
 
   /**
@@ -101,21 +87,21 @@ class Shoutbox extends ContentEntityBase implements ShoutboxInterface {
    * {@inheritdoc}
    */
   public function getOwner() {
-    return $this->get('creator')->entity;
+    return $this->get('user_id')->entity;
   }
 
   /**
    * {@inheritdoc}
    */
   public function getOwnerId() {
-    return $this->get('creator')->target_id;
+    return $this->get('user_id')->target_id;
   }
 
   /**
    * {@inheritdoc}
    */
   public function setOwnerId($uid) {
-    $this->set('creator', $uid);
+    $this->set('user_id', $uid);
     return $this;
   }
 
@@ -133,27 +119,24 @@ class Shoutbox extends ContentEntityBase implements ShoutboxInterface {
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
+    // Add the published field.
     $fields += static::publishedBaseFieldDefinitions($entity_type);
 
-    $fields['creator'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(t('Creator'))
+    $fields['author'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Authored by'))
       ->setSetting('target_type', 'user')
       ->setSetting('handler', 'default')
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
-    $fields['name'] = BaseFieldDefinition::create('string')
-      ->setLabel(t('Name'))
-      ->setDescription(t('The name of the Shoutbox'))
-      ->setSetting('max_length', 255)
-      ->setSetting('text_processing', 0)
+    $fields['shout'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Shout'))
+      ->setSetting('max_length', 512)
+      ->setSetting('text_processing', 1)
+      ->setDefaultValue('')
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE)
       ->setRequired(TRUE);
-
-    $fields['status'] = BaseFieldDefinition::create('boolean')
-      ->setLabel(t('Published'))
-      ->setDefaultValue(TRUE);
 
     $fields['created'] = BaseFieldDefinition::create('created')
       ->setLabel(t('Created'))
