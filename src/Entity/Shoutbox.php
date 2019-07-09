@@ -6,9 +6,7 @@ use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
-use Drupal\Core\Entity\EntityPublishedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
-use Drupal\shoutbox\Entity\Interfaces\ShoutboxInterface;
 use Drupal\user\UserInterface;
 
 /**
@@ -20,7 +18,7 @@ use Drupal\user\UserInterface;
  *   id = "shoutbox",
  *   label = @Translation("Shoutbox"),
  *   handlers = {
- *     "view_builder" = "Drupal\Core\Entity\ViewBuilder\EntityViewBuilder",
+ *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *     "list_builder" = "Drupal\shoutbox\Entity\ListBuilder\ShoutboxListBuilder",
  *     "views_data" = "Drupal\shoutbox\Entity\ViewsData\ShoutboxViewsData",
  *     "form" = {
@@ -103,7 +101,7 @@ class Shoutbox extends ContentEntityBase {
   }
 
   public function isPublished() {
-    return (bool) $this->getEntityKey('published');
+    return (bool) $this->get('status')->value;
   }
 
   public function setPublished($published = NULL) {
@@ -114,9 +112,7 @@ class Shoutbox extends ContentEntityBase {
     else {
       $value = TRUE;
     }
-    $key = $this->getEntityType()->getKey('published');
-    $this->set($key, $value);
-
+    $this->set('status', $value);
     return $this;
   }
 
@@ -142,7 +138,7 @@ class Shoutbox extends ContentEntityBase {
       ->setDisplayConfigurable('view', TRUE)
       ->setRequired(TRUE);
 
-    $field['status'] = BaseFieldDefinition::create('boolean')
+    $fields['status'] = BaseFieldDefinition::create('boolean')
       ->setLabel(t('Published'))
       ->setDefaultValue(TRUE)
       ->setDisplayConfigurable('form', TRUE)

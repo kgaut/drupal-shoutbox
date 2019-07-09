@@ -20,7 +20,7 @@ use Drupal\user\UserInterface;
  *   id = "shout",
  *   label = @Translation("Shout"),
  *   handlers = {
- *     "view_builder" = "Drupal\Core\Entity\ViewBuilder\EntityViewBuilder",
+ *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *     "list_builder" = "Drupal\shoutbox\Entity\ListBuilder\ShoutListBuilder",
  *     "views_data" = "Drupal\shoutbox\Entity\ViewsData\ShoutViewsData",
  *
@@ -124,7 +124,7 @@ class Shout extends ContentEntityBase {
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
 
-    $field['status'] = BaseFieldDefinition::create('boolean')
+    $fields['status'] = BaseFieldDefinition::create('boolean')
       ->setLabel(t('Published'))
       ->setDefaultValue(TRUE)
       ->setDisplayConfigurable('form', TRUE)
