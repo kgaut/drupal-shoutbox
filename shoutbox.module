@@ -1,1 +1,10 @@
 <?php
+
+function shoutbox_theme($existing, $type, $theme, $path) {
+  $themes['shoutbox'] = [
+    'render element' => 'elements',
+    'file' => 'shoutbox.page.inc',
+    'template' => 'shoutbox',
+  ];
+  return $themes;
+}

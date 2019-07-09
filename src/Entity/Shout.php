@@ -91,7 +91,7 @@ class Shout extends ContentEntityBase {
   }
 
   public function isPublished() {
-    return (bool) $this->getEntityKey('published');
+    return (bool) $this->get('status')->value;
   }
 
   public function setPublished($published = NULL) {
@@ -102,10 +102,19 @@ class Shout extends ContentEntityBase {
     else {
       $value = TRUE;
     }
-    $key = $this->getEntityType()->getKey('published');
-    $this->set($key, $value);
-
+    $this->set('status', $value);
     return $this;
+  }
+
+  public function getShoutboxId() {
+    return $this->get('shoutbox')->target_id;
+  }
+
+  /**
+   * @return \Drupal\shoutbox\Entity\Shoutbox
+   */
+  public function getShoutbox() {
+    return $this->get('shoutbox')->entity;
   }
 
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
@@ -114,6 +123,13 @@ class Shout extends ContentEntityBase {
     $fields['author'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Authored by'))
       ->setSetting('target_type', 'user')
+      ->setSetting('handler', 'default')
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['shoutbox'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Shoutbox'))
+      ->setSetting('target_type', 'shoutbox')
       ->setSetting('handler', 'default')
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
