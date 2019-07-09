@@ -40,7 +40,7 @@ use Drupal\user\UserInterface;
  *   entity_keys = {
  *     "id" = "id",
  *     "label" = "name",
- *     "uid" = "user_id",
+ *     "uid" = "creator",
  *     "published" = "status",
  *   },
  *   links = {
@@ -101,21 +101,21 @@ class Shoutbox extends ContentEntityBase implements ShoutboxInterface {
    * {@inheritdoc}
    */
   public function getOwner() {
-    return $this->get('user_id')->entity;
+    return $this->get('creator')->entity;
   }
 
   /**
    * {@inheritdoc}
    */
   public function getOwnerId() {
-    return $this->get('user_id')->target_id;
+    return $this->get('creator')->target_id;
   }
 
   /**
    * {@inheritdoc}
    */
   public function setOwnerId($uid) {
-    $this->set('user_id', $uid);
+    $this->set('creator', $uid);
     return $this;
   }
 
@@ -135,8 +135,8 @@ class Shoutbox extends ContentEntityBase implements ShoutboxInterface {
 
     $fields += static::publishedBaseFieldDefinitions($entity_type);
 
-    $fields['user_id'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(t('Created by'))
+    $fields['creator'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Creator'))
       ->setSetting('target_type', 'user')
       ->setSetting('handler', 'default')
       ->setDisplayConfigurable('form', TRUE)
