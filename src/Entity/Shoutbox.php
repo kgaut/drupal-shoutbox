@@ -53,10 +53,9 @@ use Drupal\user\UserInterface;
  *   field_ui_base_route = "shoutbox.settings"
  * )
  */
-class Shoutbox extends ContentEntityBase implements ShoutboxInterface {
-  use EntityChangedTrait;
-  use EntityPublishedTrait;
+class Shoutbox extends ContentEntityBase {
 
+  use EntityChangedTrait;
   /**
    * {@inheritdoc}
    */
@@ -67,63 +66,57 @@ class Shoutbox extends ContentEntityBase implements ShoutboxInterface {
     ];
   }
 
-  /**
-   * {@inheritdoc}
-   */
   public function getName() {
     return $this->get('name')->value;
   }
 
-  /**
-   * {@inheritdoc}
-   */
   public function setName($name) {
     $this->set('name', $name);
     return $this;
   }
 
-  /**
-   * {@inheritdoc}
-   */
   public function getCreatedTime() {
     return $this->get('created')->value;
   }
 
-  /**
-   * {@inheritdoc}
-   */
   public function setCreatedTime($timestamp) {
     $this->set('created', $timestamp);
     return $this;
   }
 
-  /**
-   * {@inheritdoc}
-   */
   public function getOwner() {
     return $this->get('creator')->entity;
   }
 
-  /**
-   * {@inheritdoc}
-   */
   public function getOwnerId() {
     return $this->get('creator')->target_id;
   }
 
-  /**
-   * {@inheritdoc}
-   */
   public function setOwnerId($uid) {
     $this->set('creator', $uid);
     return $this;
   }
 
-  /**
-   * {@inheritdoc}
-   */
   public function setOwner(UserInterface $account) {
     $this->set('user_id', $account->id());
+    return $this;
+  }
+
+  public function isPublished() {
+    return (bool) $this->getEntityKey('published');
+  }
+
+  public function setPublished($published = NULL) {
+    if ($published !== NULL) {
+      @trigger_error('The $published parameter is deprecated since version 8.3.x and will be removed in 9.0.0.', E_USER_DEPRECATED);
+      $value = (bool) $published;
+    }
+    else {
+      $value = TRUE;
+    }
+    $key = $this->getEntityType()->getKey('published');
+    $this->set($key, $value);
+
     return $this;
   }
 
@@ -132,8 +125,6 @@ class Shoutbox extends ContentEntityBase implements ShoutboxInterface {
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
-
-    $fields += static::publishedBaseFieldDefinitions($entity_type);
 
     $fields['creator'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Creator'))
@@ -151,9 +142,11 @@ class Shoutbox extends ContentEntityBase implements ShoutboxInterface {
       ->setDisplayConfigurable('view', TRUE)
       ->setRequired(TRUE);
 
-    $fields['status'] = BaseFieldDefinition::create('boolean')
+    $field['status'] = BaseFieldDefinition::create('boolean')
       ->setLabel(t('Published'))
-      ->setDefaultValue(TRUE);
+      ->setDefaultValue(TRUE)
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
 
     $fields['created'] = BaseFieldDefinition::create('created')
       ->setLabel(t('Created'))

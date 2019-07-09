@@ -44,7 +44,6 @@ use Drupal\user\UserInterface;
  *     "published" = "status",
  *   },
  *   links = {
- *     "canonical" = "/admin/content/shoutbox/shout/{shout}",
  *     "add-form" = "/admin/content/shoutbox/shout/add",
  *     "edit-form" = "/admin/content/shoutbox/shout/{shout}/edit",
  *     "delete-form" = "/admin/content/shoutbox/shout/{shout}/delete",
@@ -53,14 +52,10 @@ use Drupal\user\UserInterface;
  *   field_ui_base_route = "shout.settings"
  * )
  */
-class Shout extends ContentEntityBase implements ShoutInterface {
+class Shout extends ContentEntityBase {
 
   use EntityChangedTrait;
-  use EntityPublishedTrait;
 
-  /**
-   * {@inheritdoc}
-   */
   public static function preCreate(EntityStorageInterface $storage_controller, array &$values) {
     parent::preCreate($storage_controller, $values);
     $values += [
@@ -68,59 +63,53 @@ class Shout extends ContentEntityBase implements ShoutInterface {
     ];
   }
 
-  /**
-   * {@inheritdoc}
-   */
   public function getCreatedTime() {
     return $this->get('created')->value;
   }
 
-  /**
-   * {@inheritdoc}
-   */
   public function setCreatedTime($timestamp) {
     $this->set('created', $timestamp);
     return $this;
   }
 
-  /**
-   * {@inheritdoc}
-   */
   public function getOwner() {
     return $this->get('user_id')->entity;
   }
 
-  /**
-   * {@inheritdoc}
-   */
   public function getOwnerId() {
     return $this->get('user_id')->target_id;
   }
 
-  /**
-   * {@inheritdoc}
-   */
   public function setOwnerId($uid) {
     $this->set('user_id', $uid);
     return $this;
   }
 
-  /**
-   * {@inheritdoc}
-   */
   public function setOwner(UserInterface $account) {
     $this->set('user_id', $account->id());
     return $this;
   }
 
-  /**
-   * {@inheritdoc}
-   */
+  public function isPublished() {
+    return (bool) $this->getEntityKey('published');
+  }
+
+  public function setPublished($published = NULL) {
+    if ($published !== NULL) {
+      @trigger_error('The $published parameter is deprecated since version 8.3.x and will be removed in 9.0.0.', E_USER_DEPRECATED);
+      $value = (bool) $published;
+    }
+    else {
+      $value = TRUE;
+    }
+    $key = $this->getEntityType()->getKey('published');
+    $this->set($key, $value);
+
+    return $this;
+  }
+
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
-
-    // Add the published field.
-    $fields += static::publishedBaseFieldDefinitions($entity_type);
 
     $fields['author'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Authored by'))
@@ -129,14 +118,17 @@ class Shout extends ContentEntityBase implements ShoutInterface {
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
-    $fields['shout'] = BaseFieldDefinition::create('string')
+    $fields['shout'] = BaseFieldDefinition::create('text_long')
       ->setLabel(t('Shout'))
-      ->setSetting('max_length', 512)
-      ->setSetting('text_processing', 1)
-      ->setDefaultValue('')
-      ->setDisplayConfigurable('form', TRUE)
+      ->setSetting('text_processing', TRUE)
       ->setDisplayConfigurable('view', TRUE)
-      ->setRequired(TRUE);
+      ->setDisplayConfigurable('form', TRUE);
+
+    $field['status'] = BaseFieldDefinition::create('boolean')
+      ->setLabel(t('Published'))
+      ->setDefaultValue(TRUE)
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
 
     $fields['created'] = BaseFieldDefinition::create('created')
       ->setLabel(t('Created'))

@@ -18,7 +18,6 @@ class ShoutboxHtmlRouteProvider extends AdminHtmlRouteProvider {
    * {@inheritdoc}
    */
   public function getRoutes(EntityTypeInterface $entity_type) {
-    dd('laaaa');
     $collection = parent::getRoutes($entity_type);
 
     $entity_type_id = $entity_type->id();

@@ -19,7 +19,6 @@ class ShoutHtmlRouteProvider extends AdminHtmlRouteProvider {
    */
   public function getRoutes(EntityTypeInterface $entity_type) {
     $collection = parent::getRoutes($entity_type);
-
     $entity_type_id = $entity_type->id();
 
     if ($settings_form_route = $this->getSettingsFormRoute($entity_type)) {
@@ -43,7 +42,7 @@ class ShoutHtmlRouteProvider extends AdminHtmlRouteProvider {
       $route = new Route("/admin/structure/{$entity_type->id()}/settings");
       $route
         ->setDefaults([
-          '_form' => 'Drupal\shoutbox\Form\ShoutSettingsForm',
+          '_form' => \Drupal\shoutbox\Entity\Form\ShoutSettingsForm::class,
           '_title' => "{$entity_type->getLabel()} settings",
         ])
         ->setRequirement('_permission', $entity_type->getAdminPermission())
