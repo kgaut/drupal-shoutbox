@@ -21,7 +21,7 @@ use Drupal\user\UserInterface;
  *   label = @Translation("Shout"),
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\ViewBuilder\EntityViewBuilder",
- *     "list_builder" = "Drupal\shoutbox\ListBuilder\ShoutListBuilder",
+ *     "list_builder" = "Drupal\shoutbox\Entity\ListBuilder\ShoutListBuilder",
  *     "views_data" = "Drupal\shoutbox\Entity\ViewsData\ShoutViewsData",
  *
  *     "form" = {
@@ -30,10 +30,10 @@ use Drupal\user\UserInterface;
  *       "edit" = "Drupal\shoutbox\Entity\Form\ShoutForm",
  *       "delete" = "Drupal\shoutbox\Entity\Form\ShoutDeleteForm",
  *     },
+ *     "access" = "Drupal\shoutbox\Entity\AccessControlHandler\ShoutAccessControlHandler",
  *     "route_provider" = {
  *       "html" = "Drupal\shoutbox\Entity\HtmlRouteProvider\ShoutHtmlRouteProvider",
  *     },
- *     "access" = "Drupal\shoutbox\Entoty\AccessControlHandler\ShoutAccessControlHandler",
  *   },
  *   base_table = "shout",
  *   translatable = FALSE,

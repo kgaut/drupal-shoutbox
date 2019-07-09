@@ -2,6 +2,7 @@ administer shoutbox entities:
   title: 'Administer Shoutbox'
   description: 'Allow to create, delete shoutboxes and messages'
   restrict access: true
+
 add shout entities:
   title: 'Create new Shout entities'
 
