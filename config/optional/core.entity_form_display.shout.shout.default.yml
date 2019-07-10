@@ -1,0 +1,23 @@
+uuid: 3202599a-d4c1-4246-ade8-4becee052bc5
+langcode: fr
+status: true
+dependencies:
+  module:
+    - shoutbox
+    - text
+id: shout.shout.default
+targetEntityType: shout
+bundle: shout
+mode: default
+content:
+  shout:
+    type: text_textarea
+    weight: 0
+    region: content
+    settings:
+      rows: 2
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  author: true
+  status: true
