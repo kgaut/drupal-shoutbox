@@ -20,7 +20,10 @@
     {{- content -}}
   {% endif %}
   <section>
-    Shoutez !
-    {{ form }}
+    {% if form.data %}
+      {{ form.data }}
+    {% else %}
+      <p>{{ 'Login to post message' | trans }}</p>
+    {% endif %}
   </section>
 </div>

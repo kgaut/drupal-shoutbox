@@ -33,8 +33,14 @@ function template_preprocess_shoutbox(array &$variables) {
   foreach ($shouts as $shout) {
     $variables['content']['shouts'][] = $viewBuilder->view($shout);
   }
-
-  $shoutNew = \Drupal\shoutbox\Entity\Shout::create(['shoutbox' => $shoutbox->id()]);
-  $variables['form'] = \Drupal::service('entity.form_builder')->getForm($shoutNew, 'default');
+  $variables['form'] = [
+    'cache' => [
+      'contexts' => ['user.roles'],
+    ]
+  ];
+  if (\Drupal::currentUser()->hasPermission('shoutbox shout')) {
+    $shoutNew = \Drupal\shoutbox\Entity\Shout::create(['shoutbox' => $shoutbox->id()]);
+    $variables['form']['data'] = \Drupal::service('entity.form_builder')->getForm($shoutNew, 'default');
+  }
 
 }
