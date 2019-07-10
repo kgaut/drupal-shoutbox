@@ -90,7 +90,6 @@ class ShoutForm extends ContentEntityForm {
           '%label' => $entity->label(),
         ]));
     }
-    $form_state->setRedirect('entity.shoutbox.canonical', ['shoutbox' => $entity->getShoutboxId()]);
   }
 
 }

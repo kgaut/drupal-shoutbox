@@ -41,4 +41,25 @@ class ShoutboxService {
     return Shout::loadMultiple($shouts_ids);
   }
 
+  /**
+   * @param \Drupal\shoutbox\Entity\Shoutbox $shoutbox
+   * @param int $range
+   * @param int $offset
+   *
+   * @return \Drupal\shoutbox\Entity\Shout[]
+   */
+  public function getShoutboxAsArray() {
+    $query = \Drupal::entityQuery('shoutbox');
+    $query->condition('status', 1);
+    $query->sort('name');
+    $shoutboxes_ids = $query->execute();
+    $shoutboxes = Shoutbox::loadMultiple($shoutboxes_ids);
+    $shoutboxes_array = [];
+
+    foreach ($shoutboxes as $shoutbox) {
+      $shoutboxes_array[$shoutbox->id()] = $shoutbox->label();
+    }
+    return $shoutboxes_array;
+  }
+
 }

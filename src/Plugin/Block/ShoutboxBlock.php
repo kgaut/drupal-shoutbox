@@ -4,6 +4,7 @@ namespace Drupal\shoutbox\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\shoutbox\Entity\Shoutbox;
 
 /**
  * Provides a 'ShoutboxBlock' block.
@@ -28,10 +29,12 @@ class ShoutboxBlock extends BlockBase {
    */
   public function blockForm($form, FormStateInterface $form_state) {
     $form['shoutbox'] = [
-      '#type' => 'number',
+      '#type' => 'select',
       '#title' => $this->t('Shoutbox to use'),
       '#default_value' => $this->configuration['shoutbox'],
+      '#options' => \Drupal::service('shoutbox.service')->getShoutboxAsArray(),
       '#weight' => '0',
+      'required' => TRUE,
     ];
 
     return $form;
@@ -48,10 +51,9 @@ class ShoutboxBlock extends BlockBase {
    * {@inheritdoc}
    */
   public function build() {
-    $build = [];
-    $build['shoutbox_block_shoutbox']['#markup'] = '<p>' . $this->configuration['shoutbox']. '</p>';
-
-    return $build;
+    $viewBuilder = \Drupal::entityTypeManager()->getViewBuilder('shoutbox');
+    $shoutbox = Shoutbox::load($this->configuration['shoutbox']);
+    return $viewBuilder->view($shoutbox);
   }
 
 }
