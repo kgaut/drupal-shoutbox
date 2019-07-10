@@ -19,3 +19,4 @@ content:
     third_party_settings: {  }
 hidden:
   creator: true
+  status: true

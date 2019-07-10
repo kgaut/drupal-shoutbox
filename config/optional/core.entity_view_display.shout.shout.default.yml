@@ -1,4 +1,4 @@
-uuid: 3202599a-d4c1-4246-ade8-4becee052bc5
+uuid: b7fb3cd1-20d7-4005-acf6-293fd70f4978
 langcode: fr
 status: true
 dependencies:
@@ -11,12 +11,11 @@ bundle: shout
 mode: default
 content:
   shout:
-    type: text_textarea
+    type: text_default
     weight: 0
     region: content
-    settings:
-      rows: 2
-      placeholder: ''
+    label: hidden
+    settings: {  }
     third_party_settings: {  }
 hidden:
   author: true
