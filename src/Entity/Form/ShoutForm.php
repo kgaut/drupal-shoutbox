@@ -71,6 +71,9 @@ class ShoutForm extends ContentEntityForm {
    * {@inheritdoc}
    */
   public function save(array $form, FormStateInterface $form_state) {
+    /**
+     * @var \Drupal\shoutbox\Entity\Shout $entity
+     */
     $entity = $this->entity;
 
     $status = parent::save($form, $form_state);
@@ -87,7 +90,7 @@ class ShoutForm extends ContentEntityForm {
           '%label' => $entity->label(),
         ]));
     }
-    $form_state->setRedirect('entity.shoutbox.canonical', ['shout' => $entity->getShoutboxId()]);
+    $form_state->setRedirect('entity.shoutbox.canonical', ['shoutbox' => $entity->getShoutboxId()]);
   }
 
 }
