@@ -73,20 +73,20 @@ class Shout extends ContentEntityBase {
   }
 
   public function getOwner() {
-    return $this->get('user_id')->entity;
+    return $this->get('author')->entity;
   }
 
   public function getOwnerId() {
-    return $this->get('user_id')->target_id;
+    return $this->get('author')->target_id;
   }
 
   public function setOwnerId($uid) {
-    $this->set('user_id', $uid);
+    $this->set('author', $uid);
     return $this;
   }
 
   public function setOwner(UserInterface $account) {
-    $this->set('user_id', $account->id());
+    $this->set('author', $account->id());
     return $this;
   }
 

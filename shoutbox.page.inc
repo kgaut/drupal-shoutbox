@@ -27,7 +27,14 @@ function template_preprocess_shoutbox(array &$variables) {
   foreach (Element::children($variables['elements']) as $key) {
     $variables['content'][$key] = $variables['elements'][$key];
   }
-  $shout = \Drupal\shoutbox\Entity\Shout::create(['shoutbox' => $shoutbox->id()]);
-  $variables['form'] = \Drupal::service('entity.form_builder')->getForm($shout, 'default');
+  $variables['content']['shouts'] = [];
+  $shouts = \Drupal::service('shoutbox.service')->getShoutboxShouts($shoutbox);
+  $viewBuilder = \Drupal::entityTypeManager()->getViewBuilder('shout');
+  foreach ($shouts as $shout) {
+    $variables['content']['shouts'][] = $viewBuilder->view($shout);
+  }
+
+  $shoutNew = \Drupal\shoutbox\Entity\Shout::create(['shoutbox' => $shoutbox->id()]);
+  $variables['form'] = \Drupal::service('entity.form_builder')->getForm($shoutNew, 'default');
 
 }

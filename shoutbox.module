@@ -6,5 +6,10 @@ function shoutbox_theme($existing, $type, $theme, $path) {
     'file' => 'shoutbox.page.inc',
     'template' => 'shoutbox',
   ];
+  $themes['shout'] = [
+    'render element' => 'elements',
+    'file' => 'shout.page.inc',
+    'template' => 'shout',
+  ];
   return $themes;
 }

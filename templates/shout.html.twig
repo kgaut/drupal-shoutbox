@@ -16,6 +16,7 @@
  */
 #}
 <div{{ attributes.addClass('shout') }}>
+  <aside><a href="{{ author.url }}">{{ author.name }}</a> - {{ date }}</aside>
   {% if content %}
     {{- content -}}
   {% endif %}
