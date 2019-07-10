@@ -1,24 +1,10 @@
-administer shoutbox entities:
+administer shoutbox:
   title: 'Administer Shoutbox'
   description: 'Allow to create, delete shoutboxes and messages'
   restrict access: true
 
-add shout entities:
-  title: 'Create new Shout entities'
+view shoutbox:
+  title: 'View any published shoutbox and content'
 
-administer shout entities:
-  title: 'Administer Shout entities'
-  description: 'Allow to access the administration form to configure Shout entities.'
-  restrict access: true
-
-delete shout entities:
-  title: 'Delete Shout entities'
-
-edit shout entities:
-  title: 'Edit Shout entities'
-
-view published shout entities:
-  title: 'View published Shout entities'
-
-view unpublished shout entities:
-  title: 'View unpublished Shout entities'
+shoutbox shout:
+  title: 'Write in any published shoutbox'

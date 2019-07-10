@@ -37,7 +37,7 @@ use Drupal\user\UserInterface;
  *   },
  *   base_table = "shout",
  *   translatable = FALSE,
- *   admin_permission = "administer shout entities",
+ *   admin_permission = "administer shoutbox",
  *   entity_keys = {
  *     "id" = "id",
  *     "uid" = "author",

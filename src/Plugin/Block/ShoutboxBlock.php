@@ -2,8 +2,10 @@
 
 namespace Drupal\shoutbox\Plugin\Block;
 
+use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\shoutbox\Entity\Shoutbox;
 
 /**
@@ -47,10 +49,15 @@ class ShoutboxBlock extends BlockBase {
     $this->configuration['shoutbox'] = $form_state->getValue('shoutbox');
   }
 
+  public function blockAccess(AccountInterface $account) {
+    return AccessResult::allowedIfHasPermission($account, 'view shoutbox');
+  }
+
   /**
    * {@inheritdoc}
    */
   public function build() {
+
     $viewBuilder = \Drupal::entityTypeManager()->getViewBuilder('shoutbox');
     $shoutbox = Shoutbox::load($this->configuration['shoutbox']);
     return $viewBuilder->view($shoutbox);

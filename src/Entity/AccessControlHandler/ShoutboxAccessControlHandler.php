@@ -22,15 +22,15 @@ class ShoutboxAccessControlHandler extends EntityAccessControlHandler {
     switch ($operation) {
       case 'view':
         if (!$entity->isPublished()) {
-          return AccessResult::allowedIfHasPermission($account, 'view unpublished shoutbox entities');
+          return AccessResult::allowedIfHasPermission($account, 'administer shoutbox');
         }
-        return AccessResult::allowedIfHasPermission($account, 'view published shoutbox entities');
+        return AccessResult::allowedIfHasPermission($account, 'view shoutbox');
 
       case 'update':
-        return AccessResult::allowedIfHasPermission($account, 'edit shoutbox entities');
+        return AccessResult::allowedIfHasPermission($account, 'administer shoutbox');
 
       case 'delete':
-        return AccessResult::allowedIfHasPermission($account, 'delete shoutbox entities');
+        return AccessResult::allowedIfHasPermission($account, 'administer shoutbox');
     }
 
     // Unknown operation, no opinion.
@@ -41,7 +41,7 @@ class ShoutboxAccessControlHandler extends EntityAccessControlHandler {
    * {@inheritdoc}
    */
   protected function checkCreateAccess(AccountInterface $account, array $context, $entity_bundle = NULL) {
-    return AccessResult::allowedIfHasPermission($account, 'add shoutbox entities');
+    return AccessResult::allowedIfHasPermission($account, 'administer shoutbox');
   }
 
 }
