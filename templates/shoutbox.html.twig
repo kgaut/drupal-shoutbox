@@ -16,15 +16,15 @@
  */
 #}
 <div{{ attributes.addClass('shoutbox') }}>
-  {% if content %}
-    {{- content -}}
-  {% endif %}
-  <section>
     {% if content.shouts | length == 0 %}
-      <p><em>{{ 'No message for now' | trans }}</em></p>
+      <section>
+          <p><em>{{ 'No message for now' | trans }}</em></p>
+      </section>
+    {% else %}
+      <div class="shouts">
+        {{- content -}}
+      </div>
     {% endif %}
-
-  </section>
   <section>
     {% if form.data %}
       {{ form.data }}
