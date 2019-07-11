@@ -62,6 +62,8 @@ class ShoutForm extends ContentEntityForm {
     /* @var \Drupal\shoutbox\Entity\Shout $entity */
     $form = parent::buildForm($form, $form_state);
 
+    $form['actions']['submit']['#value'] = $this->t('Send the message');
+
     $entity = $this->entity;
 
     return $form;
