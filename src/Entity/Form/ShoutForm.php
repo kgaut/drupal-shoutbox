@@ -78,20 +78,11 @@ class ShoutForm extends ContentEntityForm {
      */
     $entity = $this->entity;
 
-    $status = parent::save($form, $form_state);
+    parent::save($form, $form_state);
 
-    switch ($status) {
-      case SAVED_NEW:
-        $this->messenger()->addMessage($this->t('Created the %label Shout.', [
-          '%label' => $entity->label(),
-        ]));
-        break;
-
-      default:
-        $this->messenger()->addMessage($this->t('Saved the %label Shout.', [
-          '%label' => $entity->label(),
-        ]));
-    }
+    $this->messenger()->addMessage($this->t('Message sent', [
+      '%label' => $entity->label(),
+    ]));
   }
 
 }
