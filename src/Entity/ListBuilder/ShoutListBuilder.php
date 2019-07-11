@@ -18,7 +18,9 @@ class ShoutListBuilder extends EntityListBuilder {
    */
   public function buildHeader() {
     $header['id'] = $this->t('Shout ID');
-    $header['name'] = $this->t('Name');
+    $header['shoutbox'] = $this->t('Shoutbox');
+    $header['author'] = $this->t('Author');
+    $header['message'] = $this->t('Message');
     return $header + parent::buildHeader();
   }
 
@@ -27,8 +29,20 @@ class ShoutListBuilder extends EntityListBuilder {
    */
   public function buildRow(EntityInterface $entity) {
     /* @var \Drupal\shoutbox\Entity\Shout $entity */
+    $shoutbox = $entity->getShoutbox();
+    $author = $entity->getOwner();
     $row['id'] = $entity->id();
-    $row['name'] = Link::createFromRoute(
+    $row['shoutbox'] = Link::createFromRoute(
+      $shoutbox->label(),
+      'entity.shoutbox.canonical',
+      ['shoutbox' => $shoutbox->id()]
+    );
+    $row['author'] = Link::createFromRoute(
+      $author->getDisplayName(),
+      'entity.user.canonical',
+      ['user' => $author->id()]
+    );
+    $row['message'] = Link::createFromRoute(
       $entity->label(),
       'entity.shout.edit_form',
       ['shout' => $entity->id()]

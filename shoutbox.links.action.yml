@@ -3,9 +3,3 @@ entity.shoutbox.add_form:
   title: 'Add Shoutbox'
   appears_on:
     - entity.shoutbox.collection
-
-entity.shout.add_form:
-  route_name: entity.shout.add_form
-  title: 'Add Shout'
-  appears_on:
-    - entity.shout.collection

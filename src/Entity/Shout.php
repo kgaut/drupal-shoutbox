@@ -63,6 +63,11 @@ class Shout extends ContentEntityBase {
     ];
   }
 
+  public function label() {
+    $message = $this->getShout();
+    return substr(strip_tags($message),0, 500);
+  }
+
   public function getCreatedTime() {
     return $this->get('created')->value;
   }
@@ -115,6 +120,10 @@ class Shout extends ContentEntityBase {
    */
   public function getShoutbox() {
     return $this->get('shoutbox')->entity;
+  }
+
+  public function getShout() {
+    return $this->get('shout')->value;
   }
 
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {

@@ -48,6 +48,19 @@ class ShoutboxService {
    *
    * @return \Drupal\shoutbox\Entity\Shout[]
    */
+  public function getShoutboxNumberOfShouts(Shoutbox $shoutbox) {
+    $query = \Drupal::entityQuery('shout');
+    $query->condition('shoutbox', $shoutbox->id());
+    return $query->count()->execute();
+  }
+
+  /**
+   * @param \Drupal\shoutbox\Entity\Shoutbox $shoutbox
+   * @param int $range
+   * @param int $offset
+   *
+   * @return \Drupal\shoutbox\Entity\Shout[]
+   */
   public function getShoutboxAsArray() {
     $query = \Drupal::entityQuery('shoutbox');
     $query->condition('status', 1);
