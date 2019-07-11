@@ -20,6 +20,12 @@
     {{- content -}}
   {% endif %}
   <section>
+    {% if content.shouts | length == 0 %}
+      <p><em>{{ 'No message for now' | trans }}</em></p>
+    {% endif %}
+
+  </section>
+  <section>
     {% if form.data %}
       {{ form.data }}
     {% else %}
