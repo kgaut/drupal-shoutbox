@@ -1,0 +1,3 @@
+shoutbox :
+  js:
+    js/shoutbox.js: {}

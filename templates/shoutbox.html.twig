@@ -22,7 +22,14 @@
       </section>
     {% else %}
       <div class="shouts">
-        {{- content -}}
+        <div class="js-shouts-wrapper">
+          {{- content.shouts -}}
+        </div>
+        <div class="show-more">
+          {% if has_mode_shouts %}
+            <p><a href="#" data-shoutbox="{{ shoutbox_id }}" data-range="{{ range }}" data-offset="{{ offset }}" class="js-load-shouts link-load-shouts">{{ 'Load older messages' | trans }}</a></p>
+          {% endif %}
+        </div>
       </div>
     {% endif %}
   <section>

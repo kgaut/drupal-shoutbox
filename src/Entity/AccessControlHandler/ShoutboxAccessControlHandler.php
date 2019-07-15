@@ -18,7 +18,7 @@ class ShoutboxAccessControlHandler extends EntityAccessControlHandler {
    * {@inheritdoc}
    */
   protected function checkAccess(EntityInterface $entity, $operation, AccountInterface $account) {
-    /** @var \Drupal\shoutbox\Entity\ShoutboxInterface $entity */
+    /** @var \Drupal\shoutbox\Entity\Shoutbox $entity */
     switch ($operation) {
       case 'view':
         if (!$entity->isPublished()) {

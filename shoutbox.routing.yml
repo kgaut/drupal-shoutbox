@@ -1,0 +1,13 @@
+shoutbox.load:
+  path: '/shouts/{shoutbox}/load/{range}/{offset}'
+  defaults:
+    _controller: '\Drupal\shoutbox\Controller\ShoutboxController::loadShouts'
+    _title: 'loadShouts'
+    range: 20
+    offset: 0
+  requirements:
+    _entity_access: 'shoutbox.view'
+  options:
+    parameters:
+      shoutbox:
+        type: 'entity:shoutbox'

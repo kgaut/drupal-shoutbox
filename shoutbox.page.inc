@@ -20,15 +20,24 @@ use Drupal\Core\Render\Element;
  *   - attributes: HTML attributes for the containing element.
  */
 function template_preprocess_shoutbox(array &$variables) {
+  $nb_shouts_to_display = 20;
+  $variables['range'] = $nb_shouts_to_display;
+  $variables['offset'] = $nb_shouts_to_display;
+  $variables['#attached']['library'][] = 'shoutbox/shoutbox';
   // Fetch Shoutbox Entity Object.
   $shoutbox = $variables['elements']['#shoutbox'];
+  $variables['shoutbox_id'] = $shoutbox->id();
+  $variables['attributes']['class'][] = 'shoutbox-' . $shoutbox->id();
+  $variables['attributes']['class'][] = 'js-shoutbox-' . $shoutbox->id();
 
   // Helpful $content variable for templates.
   foreach (Element::children($variables['elements']) as $key) {
     $variables['content'][$key] = $variables['elements'][$key];
   }
   $variables['content']['shouts'] = [];
-  $shouts = \Drupal::service('shoutbox.service')->getShoutboxShouts($shoutbox);
+  $shouts = \Drupal::service('shoutbox.service')->getShoutboxShouts($shoutbox, $nb_shouts_to_display);
+  $variables['nb_shouts'] =  \Drupal::service('shoutbox.service')->getShoutboxNumberOfShouts($shoutbox);
+  $variables['has_mode_shouts'] = $variables['nb_shouts'] > $nb_shouts_to_display;
   $viewBuilder = \Drupal::entityTypeManager()->getViewBuilder('shout');
   foreach ($shouts as $shout) {
     $variables['content']['shouts'][] = $viewBuilder->view($shout);
@@ -42,5 +51,4 @@ function template_preprocess_shoutbox(array &$variables) {
     $shoutNew = \Drupal\shoutbox\Entity\Shout::create(['shoutbox' => $shoutbox->id()]);
     $variables['form']['data'] = \Drupal::service('entity.form_builder')->getForm($shoutNew, 'default');
   }
-
 }
