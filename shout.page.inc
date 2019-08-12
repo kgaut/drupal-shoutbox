@@ -8,6 +8,7 @@
  */
 
 use Drupal\Core\Render\Element;
+use Drupal\file\Entity\File;
 
 /**
  * Prepares variables for Shout templates.
@@ -35,10 +36,19 @@ function template_preprocess_shout(array &$variables) {
     'name' => $author->getDisplayName(),
     'url' => $author->toUrl()->toString()
   ];
+  if ($author->hasField('user_picture') && $avatar = $author->get('user_picture')->referencedEntities()[0]) {
+    $variables['author']['avatar'] = [
+      '#theme' => 'image_style',
+      '#width' => NULL,
+      '#height' => NULL,
+      '#style_name' => 'thumbnail',
+      '#uri' => $avatar->getFileUri(),
+    ];
+  }
 
   $variables['attributes']['class'][] = 'author-' . $author->id();
   if ((int) $shoutbox->getOwnerId() === (int) $author->id()) {
     $variables['attributes']['class'][] = 'author-shoutbox-admin';
   }
-  $variables['date'] = \Drupal::service('date.formatter')->format($shout->getCreatedTime(), 'medium');
+  $variables['date'] = \Drupal::service('date.formatter')->format($shout->getCreatedTime(), 'short');
 }

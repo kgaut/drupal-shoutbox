@@ -16,7 +16,7 @@
  */
 #}
 <div{{ attributes.addClass('shout') }}>
-  <aside><span class="author"><a href="{{ author.url }}">{{ author.name }}</a></span><br /><span class="date">{{ date }}</span></aside>
+  <aside>{{ author.avatar }}<div><span class="author"><a href="{{ author.url }}">{{ author.name }}</a></span><br /><span class="date">{{ date }}</span></div></aside>
   {% if content %}
     {{- content -}}
   {% endif %}
