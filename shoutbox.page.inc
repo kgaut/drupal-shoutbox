@@ -20,8 +20,9 @@ use Drupal\Core\Render\Element;
  *   - attributes: HTML attributes for the containing element.
  */
 function template_preprocess_shoutbox(array &$variables) {
-  $nb_shouts_to_display = 20;
-  $variables['range'] = $nb_shouts_to_display;
+  $nb_shouts_to_display = 2;
+  $nb_shouts_to_reload = 20;
+  $variables['range'] = $nb_shouts_to_reload;
   $variables['offset'] = $nb_shouts_to_display;
   $variables['#attached']['library'][] = 'shoutbox/shoutbox';
   // Fetch Shoutbox Entity Object.
