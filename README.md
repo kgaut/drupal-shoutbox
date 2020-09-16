@@ -6,15 +6,6 @@ It allows to create multiple shoutboxes, and provide a block to see it.
 
 ## Installation and configuration
 
-### Repository configuration
-Add the following lines to the `repositories` section of your composer.json file : 
-```
-"drupal-shoutbox": {
-    "type": "vcs",
-    "url": "https://github.com/kgaut/drupal-shoutbox"
-}
-```
-
 ### Downloading
 Via composer 
 ```
