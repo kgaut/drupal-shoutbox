@@ -25,18 +25,13 @@ shout.settings_tab:
   title: 'Settings'
   base_route: shout.settings
 
-entity.shout.canonical:
-  route_name: entity.shout.canonical
-  base_route: entity.shout.canonical
-  title: 'View'
-
 entity.shout.edit_form:
   route_name: entity.shout.edit_form
-  base_route: entity.shout.canonical
+  base_route: entity.shout.edit_form
   title: 'Edit'
 
 entity.shout.delete_form:
   route_name:  entity.shout.delete_form
-  base_route:  entity.shout.canonical
+  base_route:  entity.shout.edit_form
   title: Delete
   weight: 10
