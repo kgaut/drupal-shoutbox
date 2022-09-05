@@ -1,4 +1,4 @@
 services:
   shoutbox.service:
     class: Drupal\shoutbox\ShoutboxService
-    arguments: ['@entity.manager']
+    arguments: ['@entity_type.manager']

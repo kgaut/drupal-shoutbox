@@ -2,6 +2,7 @@
 
 namespace Drupal\shoutbox;
 use Drupal\Core\Entity\EntityManagerInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\shoutbox\Entity\Shout;
 use Drupal\shoutbox\Entity\Shoutbox;
 
@@ -10,17 +11,9 @@ use Drupal\shoutbox\Entity\Shoutbox;
  */
 class ShoutboxService {
 
-  /**
-   * Drupal\Core\Entity\EntityManagerInterface definition.
-   *
-   * @var \Drupal\Core\Entity\EntityManagerInterface
-   */
-  protected $entityManager;
+  protected EntityTypeManagerInterface $entityManager;
 
-  /**
-   * Constructs a new ShoutboxService object.
-   */
-  public function __construct(EntityManagerInterface $entity_manager) {
+  public function __construct(EntityTypeManagerInterface $entity_manager) {
     $this->entityManager = $entity_manager;
   }
 
