@@ -1,5 +1,6 @@
 <?php
 
+use Drupal\shoutbox\Entity\Shout;
 /**
  * @file
  * Contains shoutbox.page.inc.
@@ -49,7 +50,7 @@ function template_preprocess_shoutbox(array &$variables) {
     ]
   ];
   if (\Drupal::currentUser()->hasPermission('shoutbox shout')) {
-    $shoutNew = \Drupal\shoutbox\Entity\Shout::create(['shoutbox' => $shoutbox->id()]);
+    $shoutNew = Shout::create(['shoutbox' => $shoutbox->id()]);
     $variables['form']['data'] = \Drupal::service('entity.form_builder')->getForm($shoutNew, 'default');
   }
 }

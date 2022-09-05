@@ -2,6 +2,7 @@
 
 namespace Drupal\shoutbox\Entity\HtmlRouteProvider;
 
+use Drupal\shoutbox\Entity\Form\ShoutSettingsForm;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\Routing\AdminHtmlRouteProvider;
 use Symfony\Component\Routing\Route;
@@ -42,7 +43,7 @@ class ShoutHtmlRouteProvider extends AdminHtmlRouteProvider {
       $route = new Route("/admin/structure/{$entity_type->id()}/settings");
       $route
         ->setDefaults([
-          '_form' => \Drupal\shoutbox\Entity\Form\ShoutSettingsForm::class,
+          '_form' => ShoutSettingsForm::class,
           '_title' => "{$entity_type->getLabel()} settings",
         ])
         ->setRequirement('_permission', $entity_type->getAdminPermission())

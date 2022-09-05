@@ -1,5 +1,5 @@
 name: 'Shoutbox'
 type: module
 description: 'Shoutbox module for drupal 8'
-core: 8.x
+core_version_requirement: ^8 || ^9
 package: 'Shoutbox'
