@@ -25,7 +25,7 @@ class ShoutboxService {
    * @return \Drupal\shoutbox\Entity\Shout[]
    */
   public function getShoutboxShouts(Shoutbox $shoutbox, $range = 20, $offset = 0) {
-    $query = \Drupal::entityQuery('shout');
+    $query = \Drupal::entityQuery('shout')->accessCheck(FALSE);
     $query->condition('status', 1);
     $query->condition('shoutbox', $shoutbox->id());
     $query->range($offset, $range);
@@ -42,7 +42,7 @@ class ShoutboxService {
    * @return \Drupal\shoutbox\Entity\Shout[]
    */
   public function getShoutboxNumberOfShouts(Shoutbox $shoutbox) {
-    $query = \Drupal::entityQuery('shout');
+    $query = \Drupal::entityQuery('shout')->accessCheck(FALSE);
     $query->condition('shoutbox', $shoutbox->id());
     return $query->count()->execute();
   }
@@ -55,7 +55,7 @@ class ShoutboxService {
    * @return \Drupal\shoutbox\Entity\Shout[]
    */
   public function getShoutboxAsArray() {
-    $query = \Drupal::entityQuery('shoutbox');
+    $query = \Drupal::entityQuery('shoutbox')->accessCheck(FALSE);
     $query->condition('status', 1);
     $query->sort('name');
     $shoutboxes_ids = $query->execute();
